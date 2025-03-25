@@ -1,1 +1,1 @@
-# scheduleApp
+# API 명세서
