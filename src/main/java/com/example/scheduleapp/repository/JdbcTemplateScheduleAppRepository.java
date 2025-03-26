@@ -28,7 +28,7 @@ public class JdbcTemplateScheduleAppRepository implements ScheduleAppRepository 
 
     @Override
     public ScheduleAppResponseDto saveSchedule(ScheduleAppRequestDto dto) {
-        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate); // jdbcTemplate로 insert문을 만들어볼게
+        SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate); 
         jdbcInsert.withTableName("scheduleapp").usingGeneratedKeyColumns("schedule_id");
         LocalDateTime now = LocalDateTime.now();
         Map<String, Object> parameters = new HashMap<>();
@@ -38,39 +38,27 @@ public class JdbcTemplateScheduleAppRepository implements ScheduleAppRepository 
         parameters.put("created_date", now);
         parameters.put("updated_date", now);
 
-        // 저장 후 생성된 key값을 Number 타입으로 반환하는 메서드
+      
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
         return new ScheduleAppResponseDto(key.longValue(), dto.getTask(), dto.getAuthor_name(), dto.getPassword(), now, now);
     }
 
 
-//    @Override
-//    public List<ScheduleAppResponseDto> findAllSchedule() {
-//        return jdbcTemplate.query("select * from memo", scheduleAppRowMapper());
-//    }
-//
-//    private RowMapper<ScheduleAppResponseDto> scheduleAppRowMapper() {
-//        return new RowMapper<ScheduleAppResponseDto>() {
-//            @Override
-//            public ScheduleAppResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-//                return new ScheduleAppResponseDto(
-//                        rs.getLong("schedule_id"),
-//                        rs.getString(""),
-//                        rs.getString("")
-//                );
-//            }
-//
-//        };
-//    }
-//
-//    @Override
-//    public ScheduleApp findMemoById(Long id) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteSchedule(Long id) {
-//
-//    }
+    @Override
+   public List<ScheduleAppResponseDto> findAllSchedule() {
+        return jdbcTemplate.query("select * from memo", scheduleAppRowMapper());
+    }
+
+   
+
+    @Override
+    public ScheduleApp findMemoById(Long id) {
+        return null;
+    }
+
+    @Override
+    public void deleteSchedule(Long id) {
+
+    }
 }
