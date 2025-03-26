@@ -8,3 +8,9 @@
 | 일정 추가      	| POST        	| /schedules              	| X            	| {<br>“task”: “할일",<br> “author_name”:“작성명", <br>“password”: “비밀번호”, <br>“created_date”: "작성일",<br> "update_date": "수정일" <br>} 	| {<br>"id": 1<br>“task”: “할일",<br> “author_name”:“작성명", <br>“password”: “비밀번호”, <br>“created_date”: "작성일",<br> "update_date": "수정일" <br>}                                                                                                                                                                                              	| 200 OK      	|
 | 일정 일부 수정 	| Patch       	| /scheduels/{scheduleId} 	| id(Long)     	| {<br>“task”: “일정",<br> “author_name”:“이름"<br>}                                                                                           	| {<br>"id": 1<br>“task”: “일정",<br> “author_name”:“이름", <br>“password”: “비밀번호”, <br>“created_date”: "작성일",<br> "update_date": "수정일" <br>}                                                                                                                                                                                                	| 200 OK      	|
 | 일정 삭제      	| Delete      	| /scheduels/{scheduleId} 	| id(Long)     	| X                                                                                                                                            	| {<br> "msg": "삭제 완료!"<br>}                                                                                                                                                                                                                                                                                                                       	| 200 OK      	|
+
+
+
+
+
+![Image](https://github.com/user-attachments/assets/727949e2-1728-48b8-9e35-e207107f5dfa)
