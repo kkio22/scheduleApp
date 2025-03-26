@@ -9,9 +9,9 @@ import java.util.List;
 public interface ScheduleAppRepository {
  ScheduleAppResponseDto saveSchedule(ScheduleAppRequestDto dto);
 
- //List<ScheduleAppResponseDto> findAllSchedules();
+ List<ScheduleAppResponseDto> findAllSchedules();
 
- //ScheduleApp findScheduleById(Long scheduleId);
+ ScheduleApp findScheduleById(Long scheduleId);
 
 
 }
