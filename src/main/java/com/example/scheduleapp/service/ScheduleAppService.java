@@ -7,14 +7,14 @@ import java.util.List;
 
 public interface ScheduleAppService {
     ScheduleAppResponseDto scheduleSave(ScheduleAppRequestDto dto);
-    // 반환할 타입
-//    List<ScheduleAppResponseDto> findAllSchedule();
-//
-//    ScheduleAppResponseDto findScheduleById(Long scheduleId);
-//
-//    ScheduleAppResponseDto updateTask(Long scheduleId, String task, String author_name);
-//
-//    void deleteSchedule(Long scheduleId);
+    
+   List<ScheduleAppResponseDto> findAllSchedule();
+
+   ScheduleAppResponseDto findScheduleById(Long scheduleId);
+
+   ScheduleAppResponseDto updateTask(Long scheduleId, String task, String author_name);
+
+   void deleteSchedule(Long scheduleId);
 
 
 }
