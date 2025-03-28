@@ -33,7 +33,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     @Override
     public ScheduleResponseDto saveRepository(Schedule schedule) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("schedule").usingGeneratedKeyColumns("id");
+        jdbcInsert.withTableName("scheduleApp").usingGeneratedKeyColumns("id");
         LocalDateTime now = LocalDateTime.now();//static
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("todo", schedule.getTodo());

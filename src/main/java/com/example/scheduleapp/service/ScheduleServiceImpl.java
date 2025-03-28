@@ -45,6 +45,6 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleResponseDto oneCheckService(long id) {
         Schedule schedule = scheduleRepository.oneCheckRepository(id); //entity 변환
-        return new ScheduleResponseDto();
+        return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
     }
 }
