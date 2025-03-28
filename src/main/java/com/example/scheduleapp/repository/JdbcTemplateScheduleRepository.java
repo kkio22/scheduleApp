@@ -79,10 +79,9 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
 
     @Override
-    public Schedule oneCheckRepository(long id) {
+    public Optional<Schedule> oneCheckRepository(long id) {
         List<Schedule> result=jdbcTemplate.query("select*from schedule where id= ?", ScheduleRowMapperV2(),id);
-//jdbcTemplate.query는 List로 값을 반환한다.
-        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id));
+        return result.stream().findAny();
     }
 
     private RowMapper<Schedule> ScheduleRowMapperV2() {
