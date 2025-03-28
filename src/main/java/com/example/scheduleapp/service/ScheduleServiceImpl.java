@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ScheduleServiceImpl implements ScheduleService {
 
-    private final ScheduleRepository scheduleRepository; //부모클래스를 쓰면 확장성과 DI가 좋음
+    private final ScheduleRepository scheduleRepository; 
 
 
     public ScheduleServiceImpl(ScheduleRepository scheduleRepository) {
@@ -44,9 +44,11 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleResponseDto oneCheckService(long id) {
-        Schedule schedule = scheduleRepository.oneCheckRepository(id); //entity 변환
-        return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
-    }
+        Optional<Schedule> schedule = scheduleRepository.oneCheckRepository(id); //entity 변환
+        //return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
+        if(schedule.isEmpty()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist:" + id);
+        }
 }
 
 
