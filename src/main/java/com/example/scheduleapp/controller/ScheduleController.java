@@ -42,6 +42,15 @@ public class ScheduleController {
     ){
         return new ResponseEntity<ScheduleResponseDto>(scheduleService.oneCheckService(id), HttpStatus.OK);
     }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> modifySchedule(
+            @PathVariable long id,
+            @RequestBody ScheduleRequestDto dto
+    ) {
+        return new ResponseEntity<>(scheduleService.modifyService(id, dto ), HttpStatus.OK);
+    }
+    
    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(
             @PathVariable long id,
