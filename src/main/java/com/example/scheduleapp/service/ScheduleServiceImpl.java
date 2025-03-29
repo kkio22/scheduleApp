@@ -50,13 +50,16 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public void deleteService(long id) {
+    public void deleteService(long id, ScheduleRequestDto dto) {
+        if ( dto.getPassword().equals(scheduleRepository.matchPassword(id))){
+            int deleteRow = scheduleRepository.deleteRepository(id);
 
-       int deleteRow = scheduleRepository.deleteRepository(id);
+            if (deleteRow == 0) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Do not exist id" + id);
+            }
+        }
 
-      if(deleteRow == 0){
-          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Do not exist id" + id );
-      }
+    }
 }
 
 
