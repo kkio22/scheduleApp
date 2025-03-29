@@ -79,10 +79,12 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
 
     @Override
-    public Optional<Schedule> oneCheckRepository(long id) {
+    public Schedule oneCheckRepository(long id) {
         List<Schedule> result=jdbcTemplate.query("select*from schedule where id= ?", ScheduleRowMapperV2(),id);
-        return result.stream().findAny();
+
+        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id));
     }
+
 
     private RowMapper<Schedule> ScheduleRowMapperV2() {
         return new RowMapper<Schedule>() {
@@ -99,7 +101,14 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
                 );
             }
         };
-    };
+    }
+
+
+    @Override
+    public int deleteRepository(long id) {
+    return jdbcTemplate.update("delete from memo where id=?" + id);
+    }
+
 
 }
 
