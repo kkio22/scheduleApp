@@ -13,6 +13,6 @@ public interface ScheduleService {
 
     ScheduleResponseDto oneCheckService (long id);
 
-    void deleteService (long id);
+    void deleteService (long id, ScheduleRequestDto dto);
 
 }
