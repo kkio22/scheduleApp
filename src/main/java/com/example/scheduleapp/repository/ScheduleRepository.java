@@ -12,6 +12,8 @@ public interface ScheduleRepository {
 
    Schedule Schedule oneCheckRepository(long id);
 
+    int modifyRepository(long id, Schedule schedule);
+
     int deleteRepository(long id);
 
     String matchPassword(long id);
