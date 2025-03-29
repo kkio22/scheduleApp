@@ -12,5 +12,7 @@ public interface ScheduleRepository {
 
    Schedule Schedule oneCheckRepository(long id);
 
-     int deleteRepository(long id);
+    int deleteRepository(long id);
+
+    String matchPassword(long id);
 }
