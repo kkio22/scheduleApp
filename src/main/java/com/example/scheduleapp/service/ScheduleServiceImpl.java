@@ -50,6 +50,29 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public ScheduleResponseDto modifyService(long id, ScheduleRequestDto dto) {
+
+        if(dto.getPassword().equals(scheduleRepository.matchPassword(id))){
+
+            Schedule schedule = new Schedule(dto.getTodo(), dto.getName());
+
+            if(dto.getTodo()==null || dto.getName() ==null) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The todo and name are required values.");
+            }
+
+            int modifyRow = scheduleRepository.modifyRepository(id, schedule);
+
+            if(modifyRow == 0){
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No data has been modified.");
+            }
+        }
+        return new ScheduleResponseDto (scheduleRepository.);
+
+
+    }
+    
+
+    @Override
     public void deleteService(long id, ScheduleRequestDto dto) {
         if ( dto.getPassword().equals(scheduleRepository.matchPassword(id))){
             int deleteRow = scheduleRepository.deleteRepository(id);
