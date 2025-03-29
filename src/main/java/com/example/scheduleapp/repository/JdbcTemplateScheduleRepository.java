@@ -109,6 +109,11 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     return jdbcTemplate.update("delete from memo where id=?" + id);
     }
 
+     @Override
+    public String matchPassword(long id) {
+        return jdbcTemplate.queryForObject("select password from scheduleapp where id= ?", String.class,id );
+    }
+
 
 }
 
