@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
         private LocalDateTime create;
         private LocalDateTime update;
 
+        public Schedule(String todo, String name) {
+        this.todo = todo;
+        this.name = name;
+
+    }
+
     }
 
 
