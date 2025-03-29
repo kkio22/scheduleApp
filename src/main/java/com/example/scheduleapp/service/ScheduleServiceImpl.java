@@ -42,14 +42,21 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
 
-    @Override
+   @Override
     public ScheduleResponseDto oneCheckService(long id) {
-        Optional<Schedule> schedule = scheduleRepository.oneCheckRepository(id); //entity 변환
-        //return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
-        if(schedule.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist:" + id);
-            return new ScheduleResponseDto(schedule.get());
-        }
+
+        Schedule schedule = scheduleRepository.oneCheckRepository(id);
+        return new ScheduleResponseDto(schedule.getId(),schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
+    }
+
+    @Override
+    public void deleteService(long id) {
+
+       int deleteRow = scheduleRepository.deleteRepository(id);
+
+      if(deleteRow == 0){
+          throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Do not exist id" + id );
+      }
 }
 
 
