@@ -42,14 +42,15 @@ public class ScheduleController {
     ){
         return new ResponseEntity<ScheduleResponseDto>(scheduleService.oneCheckService(id), HttpStatus.OK);
     }
-    @DeleteMapping("/{id}")
+   @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSchedule(
-            @PathVariable long id
+            @PathVariable long id,
+            @RequestBody ScheduleRequestDto dto
 
     ){
-        scheduleService.deleteService(id);
+        scheduleService.deleteService(id, dto);
 
-        return ResponseEntity.ok("삭제 성공");
+        return ResponseEntity.ok("일정이 삭제되었습니다.");
 
     }
 
