@@ -48,6 +48,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         //return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
         if(schedule.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist:" + id);
+            return new ScheduleResponseDto(schedule.get());
         }
 }
 
