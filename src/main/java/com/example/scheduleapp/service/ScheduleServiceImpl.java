@@ -5,12 +5,15 @@ import com.example.scheduleapp.dto.ScheduleResponseDto;
 import com.example.scheduleapp.entity.Schedule;
 import com.example.scheduleapp.repository.ScheduleRepository;
 
+import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.server.ResponseStatusException;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -44,7 +47,28 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleResponseDto oneCheckService(long id) {
-        Schedule schedule = scheduleRepository.oneCheckRepository(id); //entity 변환
+
+        Schedule schedule = scheduleRepository.oneCheckRepository(id);
         return new ScheduleResponseDto(schedule.getId(), schedule.getTodo(), schedule.getName(), schedule.getPassword(), schedule.getCreate(), schedule.getUpdate());
     }
+
+    @Override
+    public ScheduleResponseDto modifyService(long id, ScheduleRequestDto dto) {
+
+
+    }
+
+    @Override
+    public void deleteService(long id, ScheduleRequestDto dto) {
+        if (dto.getPassword().equals(scheduleRepository.matchPassword(id))) {
+            int deleteRow = scheduleRepository.deleteRepository(id);
+
+            if (deleteRow == 0) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Do not exist id" + id);
+            }
+        }
+
+    }
+
+
 }

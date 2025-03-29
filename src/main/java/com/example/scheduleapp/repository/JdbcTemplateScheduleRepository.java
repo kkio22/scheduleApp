@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 
@@ -51,12 +52,12 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public List<ScheduleResponseDto> checkRepository() {//entity 들어왔어 service에서
-        return jdbcTemplate.query("select*from schedule where = 'updated' desc ", scheduleRowMapper()); //jdbcTemplate.query jdbcTemplate 매서드/sql문 넣고,
+        return jdbcTemplate.query("select*from schedule where = 'updated' order by desc ", scheduleRowMapper()); //jdbcTemplate.query jdbcTemplate 매서드/sql문 넣고,
     }
 
 
-    private RowMapper<ScheduleResponseDto> scheduleRowMapper(){ //ScheduleResponse 객체에 데이터베이스 객체를 매핑해서 RowMapper를 이용해 반환하겠다. //물어봐야겠다.
-        return new RowMapper<ScheduleResponseDto>(){
+    private RowMapper<ScheduleResponseDto> scheduleRowMapper() { //ScheduleResponse 객체에 데이터베이스 객체를 매핑해서 RowMapper를 이용해 반환하겠다. //물어봐야겠다.
+        return new RowMapper<ScheduleResponseDto>() {
 
             @Override
             public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -75,15 +76,13 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
 
-
-
-
     @Override
     public Schedule oneCheckRepository(long id) {
-        List<Schedule> result=jdbcTemplate.query("select*from schedule where id= ?", ScheduleRowMapperV2(),id);
+        List<Schedule> result = jdbcTemplate.query("select*from schedule where id= ?", ScheduleRowMapperV2(), id);
 //jdbcTemplate.query는 List로 값을 반환한다.
-        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id));
+        return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
     }
+
 
     private RowMapper<Schedule> ScheduleRowMapperV2() {
         return new RowMapper<Schedule>() {
@@ -100,7 +99,19 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
                 );
             }
         };
-    };
+    }
+
+
+    @Override
+    public int deleteRepository(long id) {
+        return jdbcTemplate.update("delete from memo where id=?" + id);
+    }
+
+    @Override
+    public String matchPassword(long id) {
+        return jdbcTemplate.queryForObject("select password from scheduleapp where id= ?", String.class, id);
+    }
+
 
 }
 

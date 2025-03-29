@@ -4,6 +4,7 @@ import com.example.scheduleapp.dto.ScheduleResponseDto;
 import com.example.scheduleapp.entity.Schedule;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ScheduleRepository {
     ScheduleResponseDto saveRepository(Schedule schedule);
@@ -11,4 +12,8 @@ public interface ScheduleRepository {
     List<ScheduleResponseDto> checkRepository();
 
     Schedule oneCheckRepository(long id);
+
+    int deleteRepository(long id);
+
+    String matchPassword(long id);
 }

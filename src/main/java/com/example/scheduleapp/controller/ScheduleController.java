@@ -22,25 +22,46 @@ public class ScheduleController {
     }
 
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> createSchedule (
+    public ResponseEntity<ScheduleResponseDto> createSchedule(
             ScheduleRequestDto dto
     ) {
         return new ResponseEntity<>(scheduleService.saveService(dto), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<ScheduleResponseDto> checkSchedule (
-            @RequestParam(required=false)String name,
-            @RequestParam(required=false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime update
-    ){ //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)이거 찾아보기
-        return scheduleService.checkService(); //왜 얘는 new 안 해요?
+    public List<ScheduleResponseDto> checkSchedule(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime update
+    ) { //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)이거 찾아보기
+        return scheduleService.checkService(); //매서드 값 바로 반환
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> oneCheckSchedule (
+    public ResponseEntity<ScheduleResponseDto> oneCheckSchedule(
             @PathVariable long id
-    ){
-        return new ResponseEntity<ScheduleResponseDto>(scheduleService.oneCheckService(id), HttpStatus.OK);
+    ) {
+        return new ResponseEntity<>(scheduleService.oneCheckService(id), HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> modifySchedule(
+            @PathVariable long id,
+            @RequestBody ScheduleRequestDto dto
+    ) {
+        return new ResponseEntity<>(scheduleService.modifyService(id, dto ), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteSchedule(
+            @PathVariable long id,
+            @RequestBody ScheduleRequestDto dto
+
+    ) {
+        scheduleService.deleteService(id, dto);
+
+        return ResponseEntity.ok("일정이 삭제되었습니다.");
+
     }
 
 }

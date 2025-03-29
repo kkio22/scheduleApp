@@ -1,5 +1,6 @@
 package com.example.scheduleapp.dto;
 
+import com.example.scheduleapp.entity.Schedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,6 +17,8 @@ public class ScheduleResponseDto {
     private String password;
     private LocalDateTime create;
     private LocalDateTime update;
+
+
 
 //    public ScheduleResponseDto(long id, String todo, String name, String password, LocalDateTime create, LocalDateTime update){
 //        this.id=id;
