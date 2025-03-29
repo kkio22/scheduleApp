@@ -10,5 +10,7 @@ public interface ScheduleRepository {
 
     List<ScheduleResponseDto> checkRepository();
 
-   Optional<Schedule> Schedule oneCheckRepository(long id);
+   Schedule Schedule oneCheckRepository(long id);
+
+     int deleteRepository(long id);
 }
