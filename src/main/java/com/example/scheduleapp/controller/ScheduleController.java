@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/schedules")
 public class ScheduleController {
-    private final ScheduleService scheduleService; //응답에 필요
+    private final ScheduleService scheduleService;
 
     public ScheduleController(ScheduleService scheduleService) {
         this.scheduleService = scheduleService;
@@ -29,8 +29,8 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public List<ScheduleResponseDto> checkSchedule() { //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)이거 찾아보기
-        return scheduleService.checkService(); //매서드 값 바로 반환
+    public List<ScheduleResponseDto> checkSchedule() {
+        return scheduleService.checkService();
     }
 
     @GetMapping("/{id}")

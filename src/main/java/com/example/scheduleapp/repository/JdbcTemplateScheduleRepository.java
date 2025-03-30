@@ -51,7 +51,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
     @Override
-    public List<ScheduleResponseDto> checkRepository() {//entity 들어왔어 service에서
+    public List<ScheduleResponseDto> checkRepository() {
         return jdbcTemplate.query("select * from scheduleapp order by updated desc ", scheduleRowMapper()); //jdbcTemplate.query jdbcTemplate 매서드/sql문 넣고,
     }
 
@@ -79,7 +79,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     @Override
     public Schedule oneCheckRepository(long id) {
         List<Schedule> result = jdbcTemplate.query("select * from scheduleapp where id= ?", ScheduleRowMapperV2(), id);
-//jdbcTemplate.query는 List로 값을 반환한다.
+
         return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
     }
 
