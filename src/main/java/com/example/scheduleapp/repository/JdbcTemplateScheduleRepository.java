@@ -56,6 +56,8 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     }
 
 
+
+
     private RowMapper<ScheduleResponseDto> scheduleRowMapper() { //ScheduleResponse 객체에 데이터베이스 객체를 매핑해서 RowMapper를 이용해 반환하겠다. //물어봐야겠다.
         return new RowMapper<ScheduleResponseDto>() {
 
@@ -73,6 +75,76 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
             }
         };
 
+    }
+    @Override
+    public List<ScheduleResponseDto> checkReRepository(String name, LocalDateTime modifiedDateTime) {
+        return jdbcTemplate.query("select * from scheduleapp where name =? AND DATE(updated)=?", new Object[]{name, java.sql.Date.valueOf(modifiedDateTime.toLocalDate())}, scheduleRowMapperV3());
+    }
+
+
+    private RowMapper<ScheduleResponseDto> scheduleRowMapperV3(){
+        return new RowMapper<ScheduleResponseDto>(){
+
+            @Override
+            public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new ScheduleResponseDto(
+                        rs.getLong("id"),
+                        rs.getString("todo"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getTimestamp("created").toLocalDateTime(),
+                        rs.getTimestamp("updated").toLocalDateTime()
+                );
+            }
+        };
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleByDate(LocalDateTime modifiedDateTime) {
+       return jdbcTemplate.query("select * from scheduleapp where DATE(updated)=?",  new Object[]{java.sql.Date.valueOf(modifiedDateTime.toLocalDate())}, scheduleRowMapperV4());
+    }
+
+
+
+    private RowMapper<ScheduleResponseDto> scheduleRowMapperV4(){
+        return new RowMapper<ScheduleResponseDto>(){
+
+            @Override
+            public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new ScheduleResponseDto(
+                        rs.getLong("id"),
+                        rs.getString("todo"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getTimestamp("created").toLocalDateTime(),
+                        rs.getTimestamp("updated").toLocalDateTime()
+                );
+            }
+        };
+    }
+
+    @Override
+    public List<ScheduleResponseDto> findScheduleByName(String name) {
+        return jdbcTemplate.query("select * from scheduleapp where name=?", new Object[]{name}, scheduleRowMapperV5());
+    }
+
+
+
+    private RowMapper<ScheduleResponseDto> scheduleRowMapperV5(){
+        return new RowMapper<ScheduleResponseDto>(){
+
+            @Override
+            public ScheduleResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+                return new ScheduleResponseDto(
+                        rs.getLong("id"),
+                        rs.getString("todo"),
+                        rs.getString("name"),
+                        rs.getString("password"),
+                        rs.getTimestamp("created").toLocalDateTime(),
+                        rs.getTimestamp("updated").toLocalDateTime()
+                );
+            }
+        };
     }
 
 

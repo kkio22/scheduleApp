@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -31,6 +32,15 @@ public class ScheduleController {
     @GetMapping
     public List<ScheduleResponseDto> checkSchedule() {
         return scheduleService.checkService();
+    }
+
+    @GetMapping("/check")
+    public List<ScheduleResponseDto> checkReSchedule(
+            @RequestParam (required=false) String name,
+            @RequestParam (required=false)  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate modifiedDate
+    ){
+        LocalDateTime modifiedDateTime = (modifiedDate != null) ? modifiedDate.atStartOfDay() : null;
+        return scheduleService.checkReService(name, modifiedDateTime);
     }
 
     @GetMapping("/{id}")

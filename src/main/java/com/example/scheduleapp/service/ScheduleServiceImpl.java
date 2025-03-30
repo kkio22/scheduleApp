@@ -45,6 +45,22 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleRepository.checkRepository();
     }
 
+    @Override
+    public List<ScheduleResponseDto> checkReService(String name, LocalDateTime modifiedDateTime) {
+        if(name==null && modifiedDateTime==null ){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This request wrong");
+        }
+
+        if(name==null && modifiedDateTime !=null){
+            return scheduleRepository.findScheduleByDate(modifiedDateTime);
+        }
+        else if(modifiedDateTime==null && name !=null){
+            return scheduleRepository.findScheduleByName(name);
+        }
+
+        return scheduleRepository.checkReRepository(name, modifiedDateTime);
+    }
+
 
     @Override
     public ScheduleResponseDto oneCheckService(long id) {
@@ -56,30 +72,29 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleResponseDto modifyService(long id, ScheduleRequestDto dto) {
 
-        if(dto.getPassword().equals(scheduleRepository.matchPassword(id))){
+        if (dto.getPassword().equals(scheduleRepository.matchPassword(id))) {
 
             Schedule schedule = new Schedule(dto.getTodo(), dto.getName());
 
-            if(dto.getTodo()==null || dto.getName() ==null) {
+            if (dto.getTodo() == null || dto.getName() == null) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The todo and name are required values.");
             }
 
             int modifyRow = scheduleRepository.modifyRepository(id, schedule);
 
-            if(modifyRow == 0){
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No data has been modified.");
+            if (modifyRow == 0) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No data has been modified.");
             }
 
 
-        }else{
+        } else {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "password is wrong");
         }
 
         Schedule checkedSchedule = scheduleRepository.oneCheckRepository(id);
 
 
-
-        return new ScheduleResponseDto(id, checkedSchedule.getTodo(), checkedSchedule.getName(),checkedSchedule.getCreate(),checkedSchedule.getUpdate() );
+        return new ScheduleResponseDto(id, checkedSchedule.getTodo(), checkedSchedule.getName(), checkedSchedule.getCreate(), checkedSchedule.getUpdate());
 
 
     }

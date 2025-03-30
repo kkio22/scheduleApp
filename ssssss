@@ -1,0 +1,18 @@
+[33mf45feee[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31mscheduleApp/main[m[33m, [m[1;31mscheduleApp/HEAD[m[33m)[m HEAD@{0}: reset: moving to master
+[33mcac287f[m HEAD@{1}: checkout: moving from master to main
+[33mf45feee[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31mscheduleApp/main[m[33m, [m[1;31mscheduleApp/HEAD[m[33m)[m HEAD@{2}: commit: error revision
+[33m5b0fba7[m HEAD@{3}: checkout: moving from main to master
+[33mcac287f[m HEAD@{4}: checkout: moving from master to main
+[33m5b0fba7[m HEAD@{5}: commit: commit
+[33m0cc765d[m HEAD@{6}: commit: commit
+[33md947c57[m HEAD@{7}: commit: commit
+[33mfa947e9[m HEAD@{8}: commit: commit
+[33m2ee95b5[m HEAD@{9}: commit: commit
+[33m3b50c23[m HEAD@{10}: checkout: moving from main to master
+[33mcac287f[m HEAD@{11}: checkout: moving from main to main
+[33mcac287f[m HEAD@{12}: branch: Reset to scheduleApp/main
+[33m3b50c23[m HEAD@{13}: commit: init commit
+[33mce9cb6b[m HEAD@{14}: Branch: renamed refs/heads/master to refs/heads/main
+[33mce9cb6b[m HEAD@{16}: commit: init commit
+[33m22cd6dd[m HEAD@{17}: commit: init commit
+[33mbf47112[m HEAD@{18}: commit (initial): init commit
