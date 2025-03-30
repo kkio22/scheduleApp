@@ -34,7 +34,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
     @Override
     public ScheduleResponseDto saveRepository(Schedule schedule) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
-        jdbcInsert.withTableName("scheduleApp").usingGeneratedKeyColumns("id");
+        jdbcInsert.withTableName("scheduleapp").usingGeneratedKeyColumns("id");
         LocalDateTime now = LocalDateTime.now();//static
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("todo", schedule.getTodo());
@@ -52,7 +52,7 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public List<ScheduleResponseDto> checkRepository() {//entity 들어왔어 service에서
-        return jdbcTemplate.query("select*from schedule where = 'updated' order by desc ", scheduleRowMapper()); //jdbcTemplate.query jdbcTemplate 매서드/sql문 넣고,
+        return jdbcTemplate.query("select * from scheduleapp order by updated desc ", scheduleRowMapper()); //jdbcTemplate.query jdbcTemplate 매서드/sql문 넣고,
     }
 
 
@@ -66,8 +66,8 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
                         rs.getString("todo"),
                         rs.getString("name"),
                         rs.getString("password"),
-                        rs.getTimestamp("create").toLocalDateTime(),
-                        rs.getTimestamp("update").toLocalDateTime()
+                        rs.getTimestamp("created").toLocalDateTime(),
+                        rs.getTimestamp("updated").toLocalDateTime()
                 );
 
             }
@@ -78,10 +78,11 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
     @Override
     public Schedule oneCheckRepository(long id) {
-        List<Schedule> result = jdbcTemplate.query("select*from schedule where id= ?", ScheduleRowMapperV2(), id);
+        List<Schedule> result = jdbcTemplate.query("select * from scheduleapp where id= ?", ScheduleRowMapperV2(), id);
 //jdbcTemplate.query는 List로 값을 반환한다.
         return result.stream().findAny().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id));
     }
+
 
 
     private RowMapper<Schedule> ScheduleRowMapperV2() {
@@ -94,8 +95,8 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
                         rs.getString("todo"),
                         rs.getString("name"),
                         rs.getString("password"),
-                        rs.getTimestamp("create").toLocalDateTime(),
-                        rs.getTimestamp("update").toLocalDateTime()
+                        rs.getTimestamp("created").toLocalDateTime(),
+                        rs.getTimestamp("updated").toLocalDateTime()
                 );
             }
         };
@@ -103,15 +104,20 @@ public class JdbcTemplateScheduleRepository implements ScheduleRepository {
 
 
     @Override
+    public int modifyRepository(long id, Schedule schedule) {
+        return jdbcTemplate.update("update  scheduleapp set todo=? , name =? where id= ?" ,schedule.getTodo(), schedule.getName(), id);
+
+    }
+
+    @Override
     public int deleteRepository(long id) {
-        return jdbcTemplate.update("delete from memo where id=?" + id);
+        return jdbcTemplate.update("delete from scheduleapp where id=?", id);
     }
 
     @Override
     public String matchPassword(long id) {
         return jdbcTemplate.queryForObject("select password from scheduleapp where id= ?", String.class, id);
     }
-
 
 }
 

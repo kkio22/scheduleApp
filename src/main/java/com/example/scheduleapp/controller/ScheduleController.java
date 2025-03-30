@@ -23,16 +23,13 @@ public class ScheduleController {
 
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> createSchedule(
-            ScheduleRequestDto dto
+            @RequestBody ScheduleRequestDto dto
     ) {
         return new ResponseEntity<>(scheduleService.saveService(dto), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<ScheduleResponseDto> checkSchedule(
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime update
-    ) { //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)이거 찾아보기
+    public List<ScheduleResponseDto> checkSchedule() { //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)이거 찾아보기
         return scheduleService.checkService(); //매서드 값 바로 반환
     }
 

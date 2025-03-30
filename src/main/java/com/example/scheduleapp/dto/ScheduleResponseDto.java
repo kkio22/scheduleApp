@@ -20,13 +20,13 @@ public class ScheduleResponseDto {
 
 
 
-//    public ScheduleResponseDto(long id, String todo, String name, String password, LocalDateTime create, LocalDateTime update){
-//        this.id=id;
-//        this.todo=todo;
-//        this.name=name;
-//        this.password=password;
-//        this.create=create;
-//        this.update=update;
-//    }
+    public ScheduleResponseDto(Long id, String todo, String name, LocalDateTime create, LocalDateTime update){
+
+        this.id=id;
+        this.todo=todo;
+        this.name=name;
+        this.create=create;
+        this.update=update;
+    }
 
 }
